@@ -9,9 +9,9 @@ import java.awt.event.MouseListener;
 public class GGrafico extends JPanel implements MouseListener
 {
     private JFrame f = new JFrame();
-    private boolean desenha = false;
-    private Elemento elem;
     private Lista lista;
+    private Graphics2D grafico;
+    private int largura, altura;
 
     GGrafico(Lista l)
     {
@@ -23,22 +23,24 @@ public class GGrafico extends JPanel implements MouseListener
 
     public void inicia()
     {
-        f.setSize(360, 640);
+        largura = 360;
+        altura = 640;
+        f.setSize(largura, altura);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setResizable(false);
         f.setContentPane(this);
     }
 
-    public void Atualiza_Elemento(Elemento e)
+    public void Redesenha()
     {
-        elem = e;
+        repaint();
     }
 
-    public void Desenha()
-    {
-        desenha = true;
-        repaint();
+    public void Desenha_Bloco(Bloco b)
+    { 
+        grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
+        grafico.fillRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
     }
 
     @Override
@@ -46,26 +48,33 @@ public class GGrafico extends JPanel implements MouseListener
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        if(desenha)
-        {
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            Lista atual = lista.getPrimeiro();
-            while(atual != null)
-            {   
-                elem = atual.getElemento();
-                g2.setColor(new Color(elem.getCor().getVermelho(),elem.getCor().getVerde(),elem.getCor().getAzul()));
-                //g2.fillRect(elem.getX(),elem.getY(),elem.getLargura(),elem.getAltura());
-                g2.fillRoundRect(elem.getX(),elem.getY(),elem.getLargura(),elem.getAltura(),50,50);
-                atual = atual.getProximo();
-            }
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        grafico = g2;
+        Elemento elem;
+        Lista atual = lista.getPrimeiro();
+        while(atual != null)
+        {   
+            elem = atual.getElemento();
+            elem.Desenha();
+            atual = atual.getProximo();
         }
+    }
+
+    public int getLargura()
+    {
+        return largura;
+    }
+
+    public int getAltura()
+    {
+        return altura;
     }
 
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
-        Desenha();
+        //elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
+        Redesenha();
     }
     
     @Override
