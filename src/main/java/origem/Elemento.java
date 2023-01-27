@@ -3,8 +3,6 @@ package origem;
 public abstract class Elemento 
 {
     protected int x,y,largura,altura;
-    protected Cor cor;
-    protected String tipo;
     protected GGrafico gerenciador;
 
     Elemento(GGrafico g)
@@ -13,8 +11,6 @@ public abstract class Elemento
         y=0;
         largura=0;
         altura=0;
-        cor = new Cor();
-        tipo = null;
         gerenciador = g;
     }
 
@@ -28,11 +24,6 @@ public abstract class Elemento
     {
         largura = larg;
         altura = alt;
-    }
-
-    public void setCor(Cor c)
-    {
-        cor = c;
     }
 
     public int getX()
@@ -53,16 +44,6 @@ public abstract class Elemento
     public int getAltura()
     {
         return altura;
-    }
-
-    public Cor getCor()
-    {
-        return cor;
-    }
-
-    public String getTipo()
-    {
-        return tipo;
     }
 
     public void Desenha()

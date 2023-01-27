@@ -3,8 +3,10 @@ package origem;
 public class Principal 
 {
     private static GGrafico gerenciador;
+    private static GInteracao interacao;
     private static Cor preto, vermelho, roxo, marrom; 
     private static Bloco fundo, teste1, teste2, teste3;
+    private static Imagem teste;
     private static Lista lista;
 
     public static void main(String[] args)
@@ -12,9 +14,11 @@ public class Principal
         System.out.println("Teste");
         lista = new Lista();
         gerenciador = new GGrafico(lista);
+        interacao = new GInteracao(gerenciador);
         Inicializa_Cores();
-        gerenciador.Redesenha();
         Inicializa_Elementos();
+        interacao.setElemento(teste);
+        gerenciador.Redesenha();
     }
 
     public static void Inicializa_Cores()
@@ -35,7 +39,6 @@ public class Principal
     {   
         fundo = new Bloco(gerenciador);
         fundo.setTamanho(gerenciador.getLargura(), gerenciador.getAltura());
-        //fundo.setTamanho(360, 611);
         fundo.setPosicao(0, 0);
         fundo.setCor(marrom);
         lista.Insere_Elemento(fundo);
@@ -57,5 +60,11 @@ public class Principal
         teste3.setTamanho(100, 100);
         teste3.setPosicao(0, 0);
         lista.Insere_Elemento(teste3);
+
+        teste = new Imagem(gerenciador);
+        teste.setTamanho(200, 200);
+        teste.setPosicao(150, 500);
+        teste.setTextura("src/main/java/imagens/java.png");
+        lista.Insere_Elemento(teste);
     }
 }

@@ -1,12 +1,12 @@
 package origem;
 
 import java.awt.*;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class GGrafico extends JPanel implements MouseListener
+public class GGrafico extends JPanel
 {
     private JFrame f = new JFrame();
     private Lista lista;
@@ -18,17 +18,16 @@ public class GGrafico extends JPanel implements MouseListener
         super();
         inicia();
         lista = l;
-        addMouseListener(this);
     }
 
     public void inicia()
     {
         largura = 360;
-        altura = 640;
+        altura = 720;
         f.setSize(largura, altura);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setResizable(false);
+        f.setResizable(true);
         f.setContentPane(this);
     }
 
@@ -37,10 +36,15 @@ public class GGrafico extends JPanel implements MouseListener
         repaint();
     }
 
-    public void Desenha_Bloco(Bloco b)
+    public void Desenha(Bloco b)
     { 
         grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
         grafico.fillRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
+    }
+
+    public void Desenha(Imagem i)
+    {
+        grafico.drawImage(i.getTextura().getImagem(),i.getX(),i.getY(),i.getLargura(),i.getAltura(),null);
     }
 
     @Override
@@ -69,36 +73,24 @@ public class GGrafico extends JPanel implements MouseListener
     {
         return altura;
     }
+}
 
-    @Override
-    public void mousePressed(MouseEvent e) 
+class Textura
+{
+    private Image imagem;
+
+    Textura()
     {
-        //elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
-        Redesenha();
-    }
-    
-    @Override
-    public void mouseClicked(MouseEvent e) 
-    {    
-
-    }
-    
-    @Override
-    public void mouseEntered(MouseEvent e)
-    {   
-
-    }
-    
-    @Override
-    public void mouseExited(MouseEvent e) 
-    {     
-
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) 
-    {       
 
     }
 
+    public void setImagem(String origem)
+    {
+        imagem = new ImageIcon(origem).getImage();
+    }
+
+    public Image getImagem()
+    {
+        return imagem;
+    }
 }
