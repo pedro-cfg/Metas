@@ -34,5 +34,7 @@ public class Principal
         teste3.setTamanho(100, 100);
         teste3.setPosicao(0, 0);
         lista.Insere_Elemento(teste3);
+
+        //teste
     }
 }
