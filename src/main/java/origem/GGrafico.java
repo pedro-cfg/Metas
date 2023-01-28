@@ -27,7 +27,7 @@ public class GGrafico extends JPanel
         f.setSize(largura, altura);
         f.setVisible(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setResizable(true);
+        f.setResizable(false);
         f.setContentPane(this);
     }
 
@@ -45,6 +45,13 @@ public class GGrafico extends JPanel
     public void Desenha(Imagem i)
     {
         grafico.drawImage(i.getTextura().getImagem(),i.getX(),i.getY(),i.getLargura(),i.getAltura(),null);
+    }
+
+    public void Desenha(Texto t)
+    {
+        grafico.setFont(new Font(t.getFonte(),t.getNegrito()?Font.BOLD:0,t.getTamanho()));
+        grafico.setColor(new Color(t.getCor().getVermelho(),t.getCor().getVerde(),t.getCor().getAzul()));
+        grafico.drawString(t.getTexto(),t.getX(),t.getY());
     }
 
     @Override

@@ -4,14 +4,15 @@ public class Principal
 {
     private static GGrafico gerenciador;
     private static GInteracao interacao;
-    private static Cor preto, vermelho, roxo, marrom; 
-    private static Bloco fundo, teste1, teste2, teste3;
-    private static Imagem teste;
+    private static Cor bege, branco; 
+    private static Bloco capa;
+    private static Calendario[] calendario;
+    private static Imagem fundo, teste;
+    private static Texto texto;
     private static Lista lista;
 
     public static void main(String[] args)
     {
-        System.out.println("Teste");
         lista = new Lista();
         gerenciador = new GGrafico(lista);
         interacao = new GInteracao(gerenciador);
@@ -23,43 +24,46 @@ public class Principal
 
     public static void Inicializa_Cores()
     {
-        preto = new Cor();
+        bege = new Cor();
+        bege.setCor(254, 229, 162);
 
-        marrom = new Cor();
-        marrom.setCor(110, 40, 0);
-
-        vermelho = new Cor();
-        vermelho.setCor(255, 0, 0);
-
-        roxo = new Cor();
-        roxo.setCor(100, 100, 200);
+        branco = new Cor();
+        branco.setCor(255, 255, 255);
     }
 
     public static void Inicializa_Elementos()
     {   
-        fundo = new Bloco(gerenciador);
+        fundo = new Imagem(gerenciador);
         fundo.setTamanho(gerenciador.getLargura(), gerenciador.getAltura());
         fundo.setPosicao(0, 0);
-        fundo.setCor(marrom);
+        fundo.setTextura("src/main/java/imagens/verde.png");
         lista.Insere_Elemento(fundo);
 
-        teste1 = new Bloco(gerenciador);
-        teste1.setCor(vermelho);
-        teste1.setTamanho(100, 100);
-        teste1.setPosicao(100, 200);
-        lista.Insere_Elemento(teste1);
+        capa = new Bloco(gerenciador);
+        capa.setCor(bege);
+        capa.setTamanho(gerenciador.getLargura()*90/100,gerenciador.getAltura()*70/100);
+        capa.setPosicao(gerenciador.getLargura()*5/100,gerenciador.getAltura()*15/100);
+        capa.setArred(gerenciador.getLargura()*5/100, gerenciador.getLargura()*5/100);
+        lista.Insere_Elemento(capa);
 
-        teste2 = new Bloco(gerenciador);
-        teste2.setCor(roxo);
-        teste2.setTamanho(100, 100);
-        teste2.setPosicao(200, 400);
-        lista.Insere_Elemento(teste2);
+        calendario = new Calendario[42];
+        for(int i=0;i<6;i++)
+        {
+            for(int j=0;j<7;j++)
+            {
+                calendario[i*5+j] = new Calendario(gerenciador);
+                calendario[i*5+j].setCorBloco(branco);
+                calendario[i*5+j].inicia(i,j);
+                calendario[i*5+j].insereLista(lista);
+            }
+        }
 
-        teste3 = new Bloco(gerenciador);
-        teste3.setCor(preto);
-        teste3.setTamanho(100, 100);
-        teste3.setPosicao(0, 0);
-        lista.Insere_Elemento(teste3);
+        texto = new Texto(gerenciador);
+        texto.setPosicao(100, 100);
+        texto.setTexto("Teste");
+        texto.setCor(branco);
+        texto.setTamanho(100);
+        lista.Insere_Elemento(texto);
 
         teste = new Imagem(gerenciador);
         teste.setTamanho(200, 200);

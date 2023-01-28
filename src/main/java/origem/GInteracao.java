@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 public class GInteracao implements MouseListener
 {   
     private GGrafico grafico;
-    private Elemento elem;
+    private Imagem elem;
 
     public GInteracao(GGrafico g)
     {
@@ -14,7 +14,7 @@ public class GInteracao implements MouseListener
         grafico.addMouseListener(this);
     }
 
-    public void setElemento(Elemento e)
+    public void setElemento(Imagem e)
     {
         elem = e;
     }

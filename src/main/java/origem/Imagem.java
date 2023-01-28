@@ -3,6 +3,7 @@ package origem;
 public class Imagem extends Elemento
 {
     private Textura tex;
+    private int largura, altura;
 
     Imagem(GGrafico g)
     {
@@ -18,6 +19,22 @@ public class Imagem extends Elemento
     public Textura getTextura()
     {
         return tex;
+    }
+
+    public void setTamanho(int larg, int alt)
+    {
+        largura = larg;
+        altura = alt;
+    }
+
+    public int getLargura()
+    {
+        return largura;
+    }
+
+    public int getAltura()
+    {
+        return altura;
     }
 
     @Override
