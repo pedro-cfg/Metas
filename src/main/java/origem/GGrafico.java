@@ -80,6 +80,12 @@ public class GGrafico extends JPanel
     {
         return altura;
     }
+
+    public int getLarguraFonte(Texto t)
+    {
+        FontMetrics metrics = grafico.getFontMetrics(new Font(t.getFonte(),t.getNegrito()?Font.BOLD:0,t.getTamanho()));
+        return metrics.stringWidth(t.getTexto());
+    }
 }
 
 class Textura
