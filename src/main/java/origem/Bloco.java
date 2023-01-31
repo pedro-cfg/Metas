@@ -10,7 +10,6 @@ public class Bloco extends Elemento
     {
         super(g);
         arredX = arredY = largura = altura = 0;
-
     }
 
     public void setArred(int xn, int yn)

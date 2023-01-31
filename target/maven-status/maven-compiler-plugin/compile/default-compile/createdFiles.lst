@@ -1,5 +1,12 @@
+origem/Principal.class
+origem/Texto.class
+origem/Elemento.class
+origem/Bloco.class
+origem/Cor.class
+origem/Imagem.class
 origem/GGrafico.class
 origem/Lista.class
-origem/Principal.class
-origem/Elemento.class
-origem/Cor.class
+origem/GInteracao.class
+origem/Data.class
+origem/Calendario.class
+origem/Textura.class

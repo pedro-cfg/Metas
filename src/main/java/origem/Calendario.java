@@ -4,20 +4,22 @@ public class Calendario {
     private Bloco bloco;
     private Texto texto;
     private GGrafico gerenciador;
+    private static Cores cores;
     private Data data;
     private int linha, coluna;
-    private static Data[] datas;
     private static int mes, ano;
     private static Texto text_mes;
 
-    Calendario(GGrafico g)
+    Calendario(GGrafico g, Cores c)
     {
         gerenciador = g;
         bloco = new Bloco(g);
         texto = new Texto(g);
+        cores = c;
+        setCores(cores.getCor("Branco"),cores.getCor("Preto"));
     }
 
-    public void inicia(int i, int j)
+    public void atualiza(int i, int j)
     {
         linha = i;
         coluna = j;
@@ -77,24 +79,25 @@ public class Calendario {
             {
                 String s = new Integer(num).toString();
                 texto.setTexto(s);
-                for(int k = 0;k<(bi?366:365);k++)
-                {
-                    if(datas[i].getMes() == mes)
-                    {
-                        if(datas[i].getDia() == num)
-                        {
-                            data = datas[i];
-                        }
-                    }
-                }
+                // for(int k = 0;k<(bi?366:365);k++)
+                // {
+                //     if(datas[i].getMes() == mes)
+                //     {
+                //         if(datas[i].getDia() == num)
+                //         {
+                //             data = datas[i];
+                //         }
+                //     }
+                // }
             }
             else
             {
-                texto.setTexto("");
+                texto.setTexto(" ");
             }
             bloco.setTamanho(ladoBloco, ladoBloco);
         }
-        texto.setPosicao(bloco.getX()+(ladoBloco-gerenciador.getLarguraFonte(texto))/2, bloco.getY()+ladoBloco*4/5);
+        if(texto != null)
+            texto.setPosicao(bloco.getX()+(ladoBloco-gerenciador.getLarguraFonte(texto))/2, bloco.getY()+ladoBloco*4/5);
     }
 
     public void setCores(Cor bloc, Cor txt)
@@ -139,16 +142,11 @@ public class Calendario {
         ano = a;
     }
 
-    public static void setDatas(Data[] d)
-    {
-        datas = d;
-    }
-
-    public static void iniciaTextMes(GGrafico g, Cor c)
+    public static void iniciaTextMes(GGrafico g)
     {
         text_mes = new Texto(g);
         text_mes.setTexto(getStringMes(mes));
-        text_mes.setCor(c);
+        text_mes.setCor(cores.getCor("Preto"));
         text_mes.setTamanho(g.getLargura()/10);
         int tamanho = g.getLarguraFonte(text_mes);
         text_mes.setPosicao((g.getLargura()-tamanho)/2, g.getAltura()*22/100);

@@ -6,24 +6,27 @@ import java.awt.event.MouseListener;
 public class GInteracao implements MouseListener
 {   
     private GGrafico grafico;
-    private Imagem elem;
+    private Menu_Calendario menu_calendario;
 
-    public GInteracao(GGrafico g)
+    public GInteracao()
+    {
+        
+    }
+
+    public void Inicia(GGrafico g,Menu_Calendario m)
     {
         grafico = g;
         grafico.addMouseListener(this);
-    }
-
-    public void setElemento(Imagem e)
-    {
-        elem = e;
+        menu_calendario = m;
     }
 
     @Override
     public void mousePressed(MouseEvent e) 
     {
-        elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
-        grafico.Redesenha();
+        //elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
+        if(Calendario.getMes()<12)
+            menu_calendario.atualizaCalendario(Calendario.getMes()+1);
+        grafico.redesenha();
     }
     
     @Override
