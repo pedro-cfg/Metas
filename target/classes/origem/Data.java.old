@@ -1,10 +1,11 @@
 package origem;
 
-public class Data 
-{
-    private int dia, mes, ano, linha, coluna;
+import java.util.Calendar;
+
+public class Data {
+    private int dia, mes, ano;
     private boolean cumpriu_meta;
-    private Dia_Calendario conjunto;
+    private static Calendar c;
 
     Data()
     {
@@ -43,29 +44,23 @@ public class Data
         return cumpriu_meta;
     }
 
-    public void setPosicao(int i, int j)
+    public static void atualiza()
     {
-        linha = i;
-        coluna = j;
+        c = Calendar.getInstance();
     }
 
-    public int getLinha()
+    public static int getDiaAtual()
     {
-        return linha;
+        return c.get(Calendar.DAY_OF_MONTH);
     }
 
-    public int getColuna()
+    public static int getMesAtual()
     {
-        return coluna;
+        return c.get(Calendar.MONTH)+1;
     }
 
-    public Dia_Calendario getConjunto()
+    public static int getAnoAtual()
     {
-        return conjunto;
-    }
-
-    public void cria_Conjunto()
-    {
-        conjunto = new Dia_Calendario(this);
+        return c.get(Calendar.YEAR);
     }
 }

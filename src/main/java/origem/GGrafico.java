@@ -14,9 +14,10 @@ public class GGrafico extends JPanel
     AlphaComposite alcom;
     private int largura, altura;
 
-    GGrafico()
+    GGrafico(Lista l)
     {
         super();
+        lista = l;
         inicia();
     }
 
@@ -34,11 +35,6 @@ public class GGrafico extends JPanel
     public void redesenha()
     {
         repaint();
-    }
-
-    public void setLista(Lista l)
-    {
-        lista = l;
     }
 
     public void Desenha(Bloco b)

@@ -7,9 +7,9 @@ public class Texto extends Elemento
     private boolean negrito;
     private int tamanho;
 
-    Texto(GGrafico g)
+    Texto()
     {
-        super(g);
+        super();
         fonte = "Segoe Script";
         negrito = false;
         tamanho = 12;

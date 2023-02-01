@@ -5,9 +5,9 @@ public class Imagem extends Elemento
     private Textura tex;
     private int largura, altura;
 
-    Imagem(GGrafico g)
+    Imagem()
     {
-        super(g);
+        super();
         tex = new Textura();
     }
     

@@ -6,12 +6,12 @@ public abstract class Elemento
     protected float alpha;
     protected GGrafico gerenciador;
 
-    Elemento(GGrafico g)
+    Elemento()
     {
         x=0;
         y=0;
         alpha = 1.f;
-        gerenciador = g;
+        gerenciador = Principal.getGGrafico();
     }
 
     public void setPosicao(int xn, int yn)

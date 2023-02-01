@@ -6,9 +6,9 @@ public class Bloco extends Elemento
     
     private Cor cor;
 
-    Bloco(GGrafico g)
+    Bloco()
     {
-        super(g);
+        super();
         arredX = arredY = largura = altura = 0;
     }
 

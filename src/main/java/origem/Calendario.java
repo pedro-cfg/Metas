@@ -1,202 +1,62 @@
 package origem;
 
-public class Calendario {
-    private Bloco bloco;
-    private Texto texto;
-    private GGrafico gerenciador;
-    private static Cores cores;
-    private Data data;
-    private int linha, coluna;
-    private static int mes, ano;
-    private static Texto text_mes;
+import java.util.Calendar;
 
-    Calendario(GGrafico g, Cores c)
+public class Calendario 
+{
+    private int dia, mes, ano;
+    private Data[] datas;
+    private Calendar c;
+    private boolean bi;
+
+    Calendario()
     {
-        gerenciador = g;
-        bloco = new Bloco(g);
-        texto = new Texto(g);
-        cores = c;
-        setCores(cores.getCor("Branco"),cores.getCor("Preto"));
+        atualizaData();
+        bi = false;
     }
 
-    public void atualiza(int i, int j)
+    public void atualizaData()
     {
-        linha = i;
-        coluna = j;
-        int larguraTela = gerenciador.getLargura();
-        int alturaTela = gerenciador.getAltura();
-        int ladoBloco = larguraTela*9/100;
-        int dia = getDiaSemana(1,mes,ano)-1;
-        if(dia<0)
-            dia = 6;
+        c = Calendar.getInstance();
+        dia = c.get(Calendar.DAY_OF_MONTH);
+        mes = c.get(Calendar.MONTH)+1;
+        ano = c.get(Calendar.YEAR);
+        //ano = 1996;
+    }
 
-        bloco.setPosicao(larguraTela/20+larguraTela*7/60+coluna*larguraTela/9-ladoBloco/2,alturaTela*3/20+alturaTela*8/60+linha*alturaTela/15-ladoBloco/2);
-        bloco.setArred(larguraTela/36, larguraTela/36);
-
-        texto.setTamanho(ladoBloco*7/10);
-
-        if(linha == 0)
-        {
-            switch(coluna)
-            {
-                case 0:
-                    texto.setTexto("D");
-                    break;
-                case 1:
-                    texto.setTexto("S");
-                    break;
-                case 2:
-                    texto.setTexto("T");
-                    break;
-                case 3:
-                    texto.setTexto("Q");
-                    break;
-                case 4:
-                    texto.setTexto("Q");
-                    break;
-                case 5:
-                    texto.setTexto("S");
-                    break;
-                case 6:
-                    texto.setTexto("S");
-                    break;
-            }
-        }
-        else
-        {
-            int num = (linha-1)*7+coluna+1-dia;
-            int ultimo_dia;
-            boolean bi = false;
-                if(ano%4==0 && ano%100!=0 || ano%4==0 && ano%100==0 && ano%400==0)
+    public void geraDatas()
+    {
+        int cont = 0;
+        if(ano%4==0 && ano%100!=0 || ano%4==0 && ano%100==0 && ano%400==0)
             bi = true;
-            if(mes==1||mes==3||mes==5||mes==7||mes==8||mes==10||mes==12)
-                ultimo_dia = 31;
-            else if(mes==4||mes==6||mes==9||mes==11)
-                ultimo_dia = 30;
-            else 
-                ultimo_dia = bi?29:28;
-            if(num > 0 && num <= ultimo_dia)
-            {
-                String s = new Integer(num).toString();
-                texto.setTexto(s);
-                // for(int k = 0;k<(bi?366:365);k++)
-                // {
-                //     if(datas[i].getMes() == mes)
-                //     {
-                //         if(datas[i].getDia() == num)
-                //         {
-                //             data = datas[i];
-                //         }
-                //     }
-                // }
-            }
-            else
-            {
-                texto.setTexto(" ");
-            }
-            bloco.setTamanho(ladoBloco, ladoBloco);
-        }
-        if(texto != null)
-            texto.setPosicao(bloco.getX()+(ladoBloco-gerenciador.getLarguraFonte(texto))/2, bloco.getY()+ladoBloco*4/5);
-    }
-
-    public void setCores(Cor bloc, Cor txt)
-    {
-        bloco.setCor(bloc);
-        texto.setCor(txt);
-    }
-
-    public void insereLista(Lista l)
-    {
-        l.Insere_Elemento(bloco);
-        l.Insere_Elemento(texto);
-    }
-
-    public Bloco getBloco()
-    {
-        return bloco;
-    }
-
-    public Texto getTexto()
-    {
-        return texto;
-    }
-
-    public Data getData()
-    {
-        return data;
-    }
-
-    public static void setMes(int m)
-    {
-        mes = m;
-    }
-
-    public static int getMes()
-    {
-        return mes;
-    }
-
-    public static void setAno(int a)
-    {
-        ano = a;
-    }
-
-    public static void iniciaTextMes(GGrafico g)
-    {
-        text_mes = new Texto(g);
-        text_mes.setTexto(getStringMes(mes));
-        text_mes.setCor(cores.getCor("Preto"));
-        text_mes.setTamanho(g.getLargura()/10);
-        int tamanho = g.getLarguraFonte(text_mes);
-        text_mes.setPosicao((g.getLargura()-tamanho)/2, g.getAltura()*22/100);
-    }
-
-    public static void atualizaTextMes(GGrafico g)
-    {
-        text_mes.setTexto(getStringMes(mes));
-        int tamanho = g.getLarguraFonte(text_mes);
-        text_mes.setPosicao((g.getLargura()-tamanho)/2, g.getAltura()*22/100);
-    }
-
-    public static Texto getTextMesTexto()
-    {
-        return text_mes;
-    }
-
-    private static String getStringMes(int mes)
-    {
-        switch(mes)
+        datas = new Data[bi?366:365];
+        for(int m = 1;m <= 12; m++)
         {
-            case 1:
-                return "Janeiro";
-            case 2:
-                return "Fevereiro";
-            case 3:
-                return "Março";
-            case 4:
-                return "Abril";
-            case 5:
-                return "Maio";
-            case 6:
-                return "Junho";
-            case 7:
-                return "Julho";
-            case 8:
-                return "Agosto";
-            case 9:
-                return "Setembro";
-            case 10:
-                return "Outubro";
-            case 11:
-                return "Novembro";
-            case 12:
-                return "Dezembro";
+            int col = getDiaSemana(1, m, ano)-1;
+            int lin = 0;
+            int ult_dia = 31;
+            if(m==4||m==6||m==9||m==11)
+                ult_dia = 30;
+            else if(m==2)
+                ult_dia = (bi?29:28);
+            for(int d=1;d<=ult_dia;d++)
+            {
+                datas[cont] = new Data();
+                datas[cont].setData(d, m, ano);
+                col++;
+                if(col == 7)
+                {
+                    col = 0;
+                    lin++;
+                }
+                datas[cont].setPosicao(lin, col);
+                datas[cont].cria_Conjunto();
+                cont++;
+            }
         }
-        return "ERRO";
     }
 
-public int getDiaSemana(int d, int m, int a)
+    public int getDiaSemana(int d, int m, int a)
     {
         int ancorasec = (((5*((a/100)%4))%7)+3)%7;
         int y = a%100;
@@ -222,8 +82,36 @@ public int getDiaSemana(int d, int m, int a)
         else if(m==11)
             diaancora = 7;
         int diasemana = (((d-diaancora)%7)+ancora)%7;
-        if(diasemana<0)
+        if(diasemana<=0)
             diasemana+=7;
-        return diasemana;
+        return diasemana-1;
+    }
+
+    public void setMes(int m)
+    {
+        mes = m;
+    }
+
+    public int getMes()
+    {
+        return mes;
+    }
+
+    public void insere_elementos_lista(Lista l)
+    {
+        for(int i=0;i<(bi?366:365);i++)
+        {
+            if(datas[i].getMes() == mes)
+                datas[i].getConjunto().insere_Elementos(l);
+        }
+    }
+
+    public void insere_conjuntos_lista(Lista l)
+    {
+        for(int i=0;i<(bi?366:365);i++)
+        {
+            if(datas[i].getMes() == mes)
+                l.insere_Conjunto(datas[i].getConjunto());
+        }
     }
 }
