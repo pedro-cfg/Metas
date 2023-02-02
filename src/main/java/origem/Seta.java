@@ -28,9 +28,14 @@ public class Seta extends Conjunto
         return seta;
     }
 
+    public boolean getEsquerda()
+    {
+        return esquerda;
+    }
+
     @Override
     public void toque()
     {
-        interacao.atualiza_Calendario(esquerda?(-1):1);
+        interacao.interage(this);
     }
 }

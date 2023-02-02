@@ -7,6 +7,7 @@ public class Menu_Calendario extends Estado
     private Texto[] dia;
     private Texto mes;
     private Seta setaesq, setadir;
+    private Botao_Selecao verde, vermelho;
 
     Menu_Calendario()
     {
@@ -33,6 +34,8 @@ public class Menu_Calendario extends Estado
         lista_elem.insere_Elemento(mes);
         lista_elem.insere_Elemento(setadir.getImagem());
         lista_elem.insere_Elemento(setaesq.getImagem());
+        lista_elem.insere_Elemento(verde.getImagem());
+        lista_elem.insere_Elemento(vermelho.getImagem());
         calendario.insere_elementos_lista(lista_elem);
     }
 
@@ -40,6 +43,8 @@ public class Menu_Calendario extends Estado
     {
         lista_conj.insere_Conjunto(setadir);
         lista_conj.insere_Conjunto(setaesq);
+        lista_conj.insere_Conjunto(verde);
+        lista_conj.insere_Conjunto(vermelho);
         calendario.insere_conjuntos_lista(lista_conj);
     }
 
@@ -89,8 +94,9 @@ public class Menu_Calendario extends Estado
         mes.setCor(cores.getCor("Preto"));
         mes.setTamanho(gerenciador.getLargura()/10);
         mes.setTexto(getTextoMes(calendario.getMes()));
-        mes.setPosicao((larguraTela-gerenciador.getLarguraFonte(mes))/2, alturaTela*24/100);
-        y = alturaTela*20/100;
+        mes.setNegrito(true);
+        mes.setPosicao((larguraTela-gerenciador.getLarguraFonte(mes))/2, alturaTela*22/100);
+        y = alturaTela*18/100;
         x = larguraTela*8/10;
         setadir = new Seta(false);
         setadir.setParametros(x, y, largura, largura);
@@ -101,6 +107,17 @@ public class Menu_Calendario extends Estado
         setaesq.setParametros(x, y, largura, largura);
         setaesq.setImagem("src/main/java/imagens/setainv.png");
         setaesq.setTamanho();
+        y = alturaTela*78/100;
+        x = larguraTela*6/10;
+        verde = new Botao_Selecao(true);
+        verde.setParametros(x, y, largura*2, largura*2);
+        verde.setImagem("src/main/java/imagens/botao_verde.png");
+        verde.setTamanho();
+        x = larguraTela*4/10 - 2*largura;
+        vermelho = new Botao_Selecao(false);
+        vermelho.setParametros(x, y, largura*2, largura*2);
+        vermelho.setImagem("src/main/java/imagens/botao_vermelho.png");
+        vermelho.setTamanho();
     }
 
     private String getTextoMes(int mes)
@@ -135,6 +152,10 @@ public class Menu_Calendario extends Estado
         return "ERRO";
     }
 
+    public Calendario getCalendario()
+    {
+        return calendario;
+    }
 
     public void atualizaCalendario(int adi)
     {
@@ -142,7 +163,15 @@ public class Menu_Calendario extends Estado
         if(novo > 0 && novo < 13){
             calendario.setMes(novo);
             mes.setTexto(getTextoMes(novo));
-            mes.setPosicao((gerenciador.getLargura()-gerenciador.getLarguraFonte(mes))/2, gerenciador.getAltura()*24/100);
+            mes.setPosicao((gerenciador.getLargura()-gerenciador.getLarguraFonte(mes))/2, gerenciador.getAltura()*22/100);
         }
     }
+
+    @Override
+    public void atualiza()
+    {
+        limpa_lista();
+        insere_Elementos_Calendario();
+        insere_Conjuntos();
+    } 
 }

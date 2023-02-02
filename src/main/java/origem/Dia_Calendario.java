@@ -3,6 +3,7 @@ package origem;
 public class Dia_Calendario extends Conjunto
 {
     private Bloco bloco;
+    private Quadrado quadrado;
     private Texto texto;
     private Data data;
 
@@ -26,6 +27,11 @@ public class Dia_Calendario extends Conjunto
         bloco.setTamanho(largura, altura);
         bloco.setArred(larguraTela/36, larguraTela/36);
         bloco.setCor(cores.getCor("Branco"));
+        quadrado = new Quadrado();
+        quadrado.setPosicao(x,y);
+        quadrado.setTamanho(largura, altura);
+        quadrado.setArred(larguraTela/36, larguraTela/36);
+        quadrado.setCor(cores.getCor("Preto"));
         texto = new Texto();
         texto.setCor(cores.getCor("Preto"));
         texto.setTamanho(largura*7/10);
@@ -34,15 +40,30 @@ public class Dia_Calendario extends Conjunto
         texto.setPosicao(x+(largura-gerenciador.getLarguraFonte(texto))/2, y+largura*4/5);
     }
 
+    public void setCor(Cor c)
+    {
+        bloco.setCor(c);
+    }
+
     public void insere_Elementos(Lista l)
     {
         l.insere_Elemento(bloco);
         l.insere_Elemento(texto);
     }
     
+    public Quadrado getQuadrado()
+    {
+        return quadrado;
+    }
+
+    public Data getData()
+    {
+        return data;
+    }
+
     @Override
     public void toque()
     {
-        
+        interacao.interage(this);
     }
 }

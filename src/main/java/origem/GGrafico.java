@@ -45,6 +45,15 @@ public class GGrafico extends JPanel
         grafico.fillRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
     }
 
+    public void Desenha(Quadrado b)
+    { 
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, b.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(5));
+        grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
+        grafico.drawRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
+    }
+
     public void Desenha(Imagem i)
     {
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, i.getAlpha());
@@ -70,6 +79,7 @@ public class GGrafico extends JPanel
         grafico = g2;
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f);
         grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(1));
         Elemento elem;
         if(lista != null)
         {

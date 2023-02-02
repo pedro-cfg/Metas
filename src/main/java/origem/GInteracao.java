@@ -38,12 +38,23 @@ public class GInteracao implements MouseListener
         }
     }
 
-    public void atualiza_Calendario(int adi)
+    public void interage(Seta s)
     {
-        menu_calendario.limpa_lista();
-        menu_calendario.atualizaCalendario(adi);
-        menu_calendario.insere_Elementos_Calendario();
-        menu_calendario.insere_Conjuntos();
+        menu_calendario.atualizaCalendario(s.getEsquerda()?(-1):1);
+        menu_calendario.atualiza();
+    }
+
+    public void interage(Dia_Calendario d)
+    {
+        menu_calendario.getCalendario().setSelecionado(d.getData());
+        menu_calendario.atualiza();
+    }
+
+    public void interage(Botao_Selecao b)
+    {
+        menu_calendario.getCalendario().getSelecionado().setCumpriu(b.getVerde()?2:1);
+        menu_calendario.getCalendario().getSelecionado().colore();
+        menu_calendario.atualiza();
     }
 
     @Override

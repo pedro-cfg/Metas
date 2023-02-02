@@ -8,6 +8,7 @@ public class Calendario
     private Data[] datas;
     private Calendar c;
     private boolean bi;
+    private Data selecionado;
 
     Calendario()
     {
@@ -21,7 +22,6 @@ public class Calendario
         dia = c.get(Calendar.DAY_OF_MONTH);
         mes = c.get(Calendar.MONTH)+1;
         ano = c.get(Calendar.YEAR);
-        //ano = 1996;
     }
 
     public void geraDatas()
@@ -51,6 +51,16 @@ public class Calendario
                 }
                 datas[cont].setPosicao(lin, col);
                 datas[cont].cria_Conjunto();
+                if(m < mes || (m == mes && d < dia))
+                    datas[cont].setCumpriu(1);
+                else if(m==mes && d == dia)
+                {
+                    datas[cont].setCumpriu(0);
+                    selecionado = datas[cont];
+                }
+                else
+                    datas[cont].setCumpriu(3);
+                datas[cont].colore();
                 cont++;
             }
         }
@@ -104,6 +114,8 @@ public class Calendario
             if(datas[i].getMes() == mes)
                 datas[i].getConjunto().insere_Elementos(l);
         }
+        if(mes == selecionado.getMes())
+            l.insere_Elemento(selecionado.getConjunto().getQuadrado());
     }
 
     public void insere_conjuntos_lista(Lista l)
@@ -113,5 +125,16 @@ public class Calendario
             if(datas[i].getMes() == mes)
                 l.insere_Conjunto(datas[i].getConjunto());
         }
+    }
+
+    public void setSelecionado(Data b)
+    {   
+        if(b.getCumpriu() != 3)
+            selecionado = b;
+    }
+
+    public Data getSelecionado()
+    {
+        return selecionado;
     }
 }

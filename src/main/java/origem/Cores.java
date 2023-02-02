@@ -2,7 +2,7 @@ package origem;
 
 public class Cores 
 {
-    private Cor laranja, branco, preto, cinza; 
+    private Cor laranja, branco, preto, cinza, vermelho, verde, bege; 
 
     Cores()
     {
@@ -22,6 +22,15 @@ public class Cores
 
         cinza = new Cor();
         cinza.setCor(70, 70, 70);
+
+        vermelho = new Cor();
+        vermelho.setCor(255, 0, 0);
+
+        verde = new Cor();
+        verde.setCor(0, 255, 0);
+
+        bege = new Cor();
+        bege.setCor(208, 176, 132);
     }
 
     public Cor getCor(String c)
@@ -36,7 +45,45 @@ public class Cores
                 return laranja;
             case "Cinza":
                 return cinza;
+            case "Vermelho":
+                return vermelho;
+            case "Verde":
+                return verde;
+            case "Bege":
+                return bege;
         }
         return null;
+    }
+}
+
+class Cor 
+{
+    private int vermelho,verde,azul;
+
+    Cor()
+    {
+        vermelho = verde = azul = 0;
+    }
+
+    public void setCor(int r, int g, int b)
+    {
+        vermelho = r;
+        verde = g;
+        azul = b;
+    }
+
+    public int getVermelho()
+    {
+        return vermelho;
+    }
+
+    public int getVerde()
+    {
+        return verde;
+    }
+
+    public int getAzul()
+    {
+        return azul;
     }
 }

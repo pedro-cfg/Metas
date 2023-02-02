@@ -26,7 +26,7 @@ public abstract class Estado
         capa = new Bloco();
         capa.setCor(cores.getCor("Laranja"));
         capa.setAlpha(0.5f);
-        capa.setTamanho(gerenciador.getLargura()*90/100,gerenciador.getAltura()*70/100);
+        capa.setTamanho(gerenciador.getLargura()*90/100,gerenciador.getAltura()*85/100);
         capa.setPosicao((gerenciador.getLargura()-capa.getLargura())/2,(gerenciador.getAltura()-capa.getAltura())/2);
         capa.setArred(gerenciador.getLargura()*5/100, gerenciador.getLargura()*5/100);
     }
@@ -37,4 +37,5 @@ public abstract class Estado
         lista_conj.limpa_lista();
     }
 
+    public abstract void atualiza(); 
 }
