@@ -7,6 +7,7 @@ public class GInteracao implements MouseListener
 {   
     private GGrafico grafico;
     private Menu_Calendario menu_calendario;
+    private Menu_Inicio menu_inicio;
     private Lista conjuntos;
 
     public GInteracao()
@@ -14,12 +15,13 @@ public class GInteracao implements MouseListener
         
     }
 
-    public void Inicia(Menu_Calendario m)
+    public void Inicia(Menu_Calendario m, Menu_Inicio m2)
     {
         grafico = Principal.getGGrafico();
         conjuntos = Principal.getListaConjuntos();
         grafico.addMouseListener(this);
         menu_calendario = m;
+        menu_inicio = m2;
     }
 
     public void verifica_Toque(int x, int y)
@@ -52,9 +54,21 @@ public class GInteracao implements MouseListener
 
     public void interage(Botao_Selecao b)
     {
+        int antes = menu_calendario.getCalendario().getSelecionado().getCumpriu();
         menu_calendario.getCalendario().getSelecionado().setCumpriu(b.getVerde()?2:1);
         menu_calendario.getCalendario().getSelecionado().colore();
+        int depois = menu_calendario.getCalendario().getSelecionado().getCumpriu();
+        if(antes != depois)
+            menu_inicio.setNum(menu_inicio.getNum()+(b.getVerde()?1:(-1)));
         menu_calendario.atualiza();
+    }
+
+    public void interage(Botao_Inicio b)
+    {
+        if(b.getInicio())
+            menu_calendario.atualiza();
+        else
+            menu_inicio.atualiza();
     }
 
     @Override

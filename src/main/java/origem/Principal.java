@@ -7,6 +7,7 @@ public class Principal
     private static Cores cores;
     private static Lista elementos, conjuntos;
     private static Menu_Calendario menu_calendario;
+    private static Menu_Inicio menu_inicio;
 
     public static void main(String[] args)
     {
@@ -19,8 +20,11 @@ public class Principal
             cores = new Cores();
             menu_calendario = new Menu_Calendario();
             menu_calendario.inicia();
-            menu_calendario.insere_Elementos_Calendario();
-            interacao.Inicia(menu_calendario);
+            menu_inicio = new Menu_Inicio();
+            menu_inicio.inicia();
+            //menu_calendario.atualiza();
+            menu_inicio.atualiza();
+            interacao.Inicia(menu_calendario,menu_inicio);
         }
         gerenciador.redesenha();
     }

@@ -27,7 +27,7 @@ public class GGrafico extends JPanel
         altura = 720;
         f.setSize(largura, altura);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setResizable(false);
+        f.setResizable(true);
         f.setContentPane(this);
         f.setVisible(true);
     }
@@ -49,7 +49,7 @@ public class GGrafico extends JPanel
     { 
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, b.getAlpha());
         grafico.setComposite(alcom);
-        grafico.setStroke(new BasicStroke(5));
+        grafico.setStroke(new BasicStroke(b.getGrossura()));
         grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
         grafico.drawRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
     }
@@ -59,6 +59,14 @@ public class GGrafico extends JPanel
         alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, i.getAlpha());
         grafico.setComposite(alcom);
         grafico.drawImage(i.getTextura().getImagem(),i.getX(),i.getY(),i.getLargura(),i.getAltura(),null);
+    }
+
+    public void Desenha(Linha i)
+    {
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, i.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(i.getGrossura()));
+        grafico.drawLine(i.getX(), i.getY(), i.getX2(), i.getY2());
     }
 
     public void Desenha(Texto t)
