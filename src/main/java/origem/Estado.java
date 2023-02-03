@@ -21,7 +21,7 @@ public abstract class Estado
         fundo = new Imagem();
         fundo.setTamanho(gerenciador.getLargura(), gerenciador.getAltura());
         fundo.setPosicao(0, 0);
-        fundo.setTextura("src/main/java/imagens/verde.png");
+        fundo.setTextura("src/main/java/imagens/cinza.png");
 
         capa = new Bloco();
         capa.setCor(cores.getCor("Laranja"));

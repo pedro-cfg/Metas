@@ -37,6 +37,10 @@ public class Botao_Selecao extends Conjunto
     @Override
     public void toque()
     {
-        interacao.interage(this);
+        try {
+            interacao.interage(this);
+        } catch (Exception e) {
+           
+        }
     }
 }

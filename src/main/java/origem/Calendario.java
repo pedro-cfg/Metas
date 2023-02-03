@@ -137,4 +137,9 @@ public class Calendario
     {
         return selecionado;
     }
+
+    public Data[] getDatas()
+    {
+        return datas;
+    }
 }
