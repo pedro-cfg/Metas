@@ -1,44 +1,81 @@
 package origem;
 
 import java.awt.*;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class GGrafico extends JPanel implements MouseListener
+public class GGrafico extends JPanel
 {
     private JFrame f = new JFrame();
-    private boolean desenha = false;
-    private Elemento elem;
     private Lista lista;
+    private Graphics2D grafico;
+    AlphaComposite alcom;
+    private int largura, altura;
 
     GGrafico(Lista l)
     {
         super();
-        inicia();
         lista = l;
-        addMouseListener(this);
+        inicia();
     }
 
     public void inicia()
     {
-        f.setSize(360, 640);
-        f.setVisible(true);
+        largura = 360;
+        altura = 720;
+        f.setSize(largura, altura);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setResizable(false);
+        f.setResizable(true);
         f.setContentPane(this);
+        f.setVisible(true);
     }
 
-    public void Atualiza_Elemento(Elemento e)
+    public void redesenha()
     {
-        elem = e;
-    }
-
-    public void Desenha()
-    {
-        desenha = true;
         repaint();
+    }
+
+    public void Desenha(Bloco b)
+    { 
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, b.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
+        grafico.fillRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
+    }
+
+    public void Desenha(Quadrado b)
+    { 
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, b.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(b.getGrossura()));
+        grafico.setColor(new Color(b.getCor().getVermelho(),b.getCor().getVerde(),b.getCor().getAzul()));
+        grafico.drawRoundRect(b.getX(),b.getY(),b.getLargura(),b.getAltura(),b.getArredX(),b.getArredY());
+    }
+
+    public void Desenha(Imagem i)
+    {
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, i.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.drawImage(i.getTextura().getImagem(),i.getX(),i.getY(),i.getLargura(),i.getAltura(),null);
+    }
+
+    public void Desenha(Linha i)
+    {
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, i.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(i.getGrossura()));
+        grafico.drawLine(i.getX(), i.getY(), i.getX2(), i.getY2());
+    }
+
+    public void Desenha(Texto t)
+    {
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, t.getAlpha());
+        grafico.setComposite(alcom);
+        grafico.setFont(new Font(t.getFonte(),t.getNegrito()?Font.BOLD:0,t.getTamanho()));
+        grafico.setColor(new Color(t.getCor().getVermelho(),t.getCor().getVerde(),t.getCor().getAzul()));
+        grafico.drawString(t.getTexto(),t.getX(),t.getY());
     }
 
     @Override
@@ -46,50 +83,57 @@ public class GGrafico extends JPanel implements MouseListener
     {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        if(desenha)
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        grafico = g2;
+        alcom = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.f);
+        grafico.setComposite(alcom);
+        grafico.setStroke(new BasicStroke(1));
+        Elemento elem;
+        if(lista != null)
         {
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             Lista atual = lista.getPrimeiro();
             while(atual != null)
             {   
                 elem = atual.getElemento();
-                g2.setColor(new Color(elem.getCor().getVermelho(),elem.getCor().getVerde(),elem.getCor().getAzul()));
-                //g2.fillRect(elem.getX(),elem.getY(),elem.getLargura(),elem.getAltura());
-                g2.fillRoundRect(elem.getX(),elem.getY(),elem.getLargura(),elem.getAltura(),50,50);
+                elem.Desenha();
                 atual = atual.getProximo();
             }
         }
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) 
+    public int getLargura()
     {
-        elem.setPosicao(e.getX()-elem.getLargura()/2, e.getY()-elem.getAltura()/2);
-        Desenha();
+        return largura;
     }
-    
-    @Override
-    public void mouseClicked(MouseEvent e) 
-    {    
 
+    public int getAltura()
+    {
+        return altura;
     }
-    
-    @Override
-    public void mouseEntered(MouseEvent e)
-    {   
 
+    public int getLarguraFonte(Texto t)
+    {
+        FontMetrics metrics = grafico.getFontMetrics(new Font(t.getFonte(),t.getNegrito()?Font.BOLD:0,t.getTamanho()));
+        return metrics.stringWidth(t.getTexto());
     }
-    
-    @Override
-    public void mouseExited(MouseEvent e) 
-    {     
+}
 
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e) 
-    {       
+class Textura
+{
+    private Image imagem;
+
+    Textura()
+    {
 
     }
 
+    public void setImagem(String origem)
+    {
+        imagem = new ImageIcon(origem).getImage();
+    }
+
+    public Image getImagem()
+    {
+        return imagem;
+    }
 }

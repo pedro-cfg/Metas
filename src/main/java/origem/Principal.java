@@ -1,38 +1,65 @@
 package origem;
 
+import java.io.IOException;
+
 public class Principal 
 {
     private static GGrafico gerenciador;
-    private static Elemento teste1, teste2, teste3;
-    private static Lista lista;
+    private static GInteracao interacao;
+    private static Cores cores;
+    private static Lista elementos, conjuntos;
+    private static Menu_Calendario menu_calendario;
+    private static Menu_Inicio menu_inicio;
+    private static Salvamento salvamento;
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        System.out.println("Teste");
-        lista = new Lista();
-        gerenciador = new GGrafico(lista);
-        Inicializa_Elementos();
-        gerenciador.Desenha();
+        while(gerenciador == null)
+        {
+            inicia_Tudo();
+            salvamento.le(menu_calendario.getCalendario().getDatas(),menu_inicio);
+            menu_inicio.atualiza();
+        }
+        gerenciador.redesenha();
     }
 
-    public static void Inicializa_Elementos()
-    {   
-        teste1 = new Elemento();
-        teste1.setCor(255, 0, 0);
-        teste1.setTamanho(100, 100);
-        teste1.setPosicao(100, 200);
-        lista.Insere_Elemento(teste1);
+    public static void inicia_Tudo()
+    {
+        elementos = new Lista();
+        conjuntos = new Lista();
+        gerenciador = new GGrafico(elementos);
+        interacao = new GInteracao();
+        cores = new Cores();
+        menu_calendario = new Menu_Calendario();
+        menu_calendario.inicia();
+        menu_inicio = new Menu_Inicio();
+        menu_inicio.inicia();
+        salvamento = new Salvamento();
+        interacao.Inicia(menu_calendario,menu_inicio,salvamento);
+    }
 
-        teste2 = new Elemento();
-        teste2.setCor(100, 100, 200);
-        teste2.setTamanho(100, 100);
-        teste2.setPosicao(200, 400);
-        lista.Insere_Elemento(teste2);
+    public static GGrafico getGGrafico()
+    {
+        return gerenciador;
+    }
 
-        teste3 = new Elemento();
-        teste3.setCor(0, 0, 0);
-        teste3.setTamanho(100, 100);
-        teste3.setPosicao(0, 0);
-        lista.Insere_Elemento(teste3);
+    public static GInteracao getGInteracao()
+    {
+        return interacao;
+    }
+
+    public static Cores getCores()
+    {
+        return cores;
+    }
+
+    public static Lista getListaElementos()
+    {
+        return elementos;
+    }
+
+    public static Lista getListaConjuntos()
+    {
+        return conjuntos;
     }
 }

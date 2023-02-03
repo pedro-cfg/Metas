@@ -1,34 +1,23 @@
 package origem;
 
-public class Elemento 
+public abstract class Elemento 
 {
-    private int x,y,largura,altura;
-    private Cor cor;
+    protected int x,y;
+    protected float alpha;
+    protected GGrafico gerenciador;
 
     Elemento()
     {
         x=0;
         y=0;
-        largura=0;
-        altura=0;
-        cor = new Cor();
+        alpha = 1.f;
+        gerenciador = Principal.getGGrafico();
     }
 
     public void setPosicao(int xn, int yn)
     {
         x = xn;
         y = yn;
-    }
-
-    public void setTamanho(int larg, int alt)
-    {
-        largura = larg;
-        altura = alt;
-    }
-
-    public void setCor(int r, int g, int b)
-    {
-        cor.setCor(r, g, b);
     }
 
     public int getX()
@@ -41,56 +30,18 @@ public class Elemento
         return y;
     }
 
-    public int getLargura()
+    public void setAlpha(float f)
     {
-        return largura;
+        alpha = f;
     }
 
-    public int getAltura()
+    public float getAlpha()
     {
-        return altura;
+        return alpha;
     }
 
-    public Cor getCor()
+    public void Desenha()
     {
-        return cor;
-    }
 
-    public void Desenha(GGrafico ger)
-    {
-        ger.Atualiza_Elemento(this);
-        ger.Desenha();
-    }
-}
-
-class Cor 
-{
-    private int vermelho,verde,azul;
-
-    Cor()
-    {
-        vermelho = verde = azul = 0;
-    }
-
-    public void setCor(int r, int g, int b)
-    {
-        vermelho = r;
-        verde = g;
-        azul = b;
-    }
-
-    public int getVermelho()
-    {
-        return vermelho;
-    }
-
-    public int getVerde()
-    {
-        return verde;
-    }
-
-    public int getAzul()
-    {
-        return azul;
     }
 }
