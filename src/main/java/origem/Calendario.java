@@ -22,6 +22,14 @@ public class Calendario
         dia = c.get(Calendar.DAY_OF_MONTH);
         mes = c.get(Calendar.MONTH)+1;
         ano = c.get(Calendar.YEAR);
+        long inicio = c.getTimeInMillis();
+        long tempo = 0;
+        while(tempo < 100)
+        {
+            c = Calendar.getInstance();
+            tempo = c.getTimeInMillis() - inicio;
+        }
+
     }
 
     public void geraDatas()

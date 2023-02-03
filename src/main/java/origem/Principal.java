@@ -14,27 +14,29 @@ public class Principal
 
     public static void main(String[] args) throws IOException
     {
-        while(gerenciador == null)
-        {
-            inicia_Tudo();
-            salvamento.le(menu_calendario.getCalendario().getDatas(),menu_inicio);
-            menu_inicio.atualiza();
-        }
+        cria_Tudo();
+        inicia_Tudo();   
+        salvamento.le(menu_calendario.getCalendario().getDatas(),menu_inicio);
+        menu_inicio.atualiza();
         gerenciador.redesenha();
+    }
+
+    public static void cria_Tudo()
+    {
+        elementos = new Lista();
+        gerenciador = new GGrafico(elementos);
+        conjuntos = new Lista();
+        interacao = new GInteracao();
+        cores = new Cores();
+        menu_calendario = new Menu_Calendario();
+        menu_inicio = new Menu_Inicio();
+        salvamento = new Salvamento();
     }
 
     public static void inicia_Tudo()
     {
-        elementos = new Lista();
-        conjuntos = new Lista();
-        gerenciador = new GGrafico(elementos);
-        interacao = new GInteracao();
-        cores = new Cores();
-        menu_calendario = new Menu_Calendario();
         menu_calendario.inicia();
-        menu_inicio = new Menu_Inicio();
         menu_inicio.inicia();
-        salvamento = new Salvamento();
         interacao.Inicia(menu_calendario,menu_inicio,salvamento);
     }
 
