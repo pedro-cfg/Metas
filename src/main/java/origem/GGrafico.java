@@ -27,7 +27,7 @@ public class GGrafico extends JPanel
         altura = 720;
         f.setSize(largura, altura);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setResizable(true);
+        f.setResizable(false);
         f.setContentPane(this);
         f.setVisible(true);
     }
