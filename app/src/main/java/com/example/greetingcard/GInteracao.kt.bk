@@ -1,0 +1,66 @@
+//package origem;
+package com.example.greetingcard
+
+import java.io.IOException
+
+class GInteracao {
+    private var grafico: GGrafico? = null
+    private var menu_calendario: Menu_Calendario? = null
+    private var menu_inicio: Menu_Inicio? = null
+    private var conjuntos: Lista? = null
+    private var salvamento: Salvamento? = null
+    fun Inicia(m: Menu_Calendario?, m2: Menu_Inicio?, s: Salvamento?) {
+        grafico = Principal.getGGrafico()
+        conjuntos = Principal.getListaConjuntos()
+        menu_calendario = m
+        menu_inicio = m2
+        salvamento = s
+    }
+
+
+    fun verifica_toque(x:Int,y:Int) {
+        var conj: Conjunto
+        if (conjuntos != null) {
+            var atual = conjuntos!!.primeiro
+            var acionou:Boolean = false
+            while (atual != null && !acionou) {
+                conj = atual.geConjunto()
+                if(x > conj.getX() && x < conj.getX()+conj.getLargura() && y > conj.getY() && y < conj.getY()+conj.getAltura())
+                {
+                    conj.toque();
+                    acionou = true;
+                }
+                atual = atual.proximo
+            }
+        }
+    }
+
+    fun interage(s: Seta) {
+        menu_calendario!!.atualizaCalendario(if (s.esquerda) -1 else 1)
+        println("Seta!")
+        menu_calendario!!.atualiza()
+    }
+
+    fun interage(d: Dia_Calendario) {
+        menu_calendario!!.calendario.selecionado = d.data
+        menu_calendario!!.atualiza()
+    }
+
+    @Throws(IOException::class)
+    fun interage(b: Botao_Selecao) {
+        if (menu_calendario!!.calendario.mes == menu_calendario!!.calendario.selecionado.mes) {
+            val antes = menu_calendario!!.calendario.selecionado.cumpriu
+            menu_calendario!!.calendario.selecionado.cumpriu = if (b.verde) 2 else 1
+            menu_calendario!!.calendario.selecionado.colore()
+            val depois = menu_calendario!!.calendario.selecionado.cumpriu
+            if (antes != depois && !(antes == 0 && depois == 1)) menu_inicio!!.num =
+                menu_inicio!!.num + if (b.verde) 1 else -1
+            menu_calendario!!.atualiza()
+            salvamento!!.escreve(menu_calendario!!.calendario.datas)
+        }
+    }
+
+    fun interage(b: Botao_Inicio) {
+        if (b.inicio) menu_calendario!!.atualiza() else menu_inicio!!.atualiza()
+    }
+}

@@ -1,0 +1,113 @@
+package com.example.greetingcard
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.util.AttributeSet
+import android.view.View
+
+import androidx.compose.foundation.layout.*
+
+import androidx.compose.runtime.Composable
+
+import androidx.compose.ui.graphics.Canvas
+
+import androidx.compose.ui.platform.LocalConfiguration
+
+import kotlin.math.roundToInt
+
+
+class GGrafico @JvmOverloads constructor(private val lista: Lista, context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr){
+    private var largura = 0
+    private var altura = 0
+    private var canvas:Canvas = null
+
+    init {
+
+    }
+
+    @Composable
+    fun inicia(){
+        val configuration = LocalConfiguration.current
+        altura = configuration.screenHeightDp
+        largura = configuration.screenWidthDp
+        val bitmap = Bitmap.createBitmap(largura, altura, Bitmap.Config.ARGB_8888)
+        canvas = Canvas(bitmap)
+    }
+
+    fun Desenha(b: Bloco?) {
+        if (b != null) {
+            var alpha:Int = (255 * b.getAlpha()).roundToInt()
+
+        }
+    }
+
+    fun Desenha(b: Quadrado?) {
+        if (b != null) {
+            var alpha:Int = (255 * b.getAlpha()).roundToInt()
+
+        }
+    }
+
+    fun Desenha(b: Imagem?) {
+        if (b != null) {
+            var alpha:Int = (255 * b.getAlpha()).roundToInt()
+
+        }
+    }
+
+    fun Desenha(b: Linha?) {
+        if (b != null) {
+            var alpha:Int = (255 * b.getAlpha()).roundToInt()
+            var lar:Int = b.x2 - b.getX()
+
+        }
+    }
+
+    fun Desenha(b: Texto?) {
+        if (b != null) {
+            var alpha:Int = (255 * b.getAlpha()).roundToInt()
+
+        }
+    }
+
+    fun getLargura(): Int{
+        return largura
+    }
+
+    fun getAltura(): Int {
+        return altura
+    }
+
+    override fun onDraw(canvas: android.graphics.Canvas?) {
+        super.onDraw(canvas)
+
+    }
+
+
+
+
+    fun Redesenha() {
+        if(lista != null)
+        {
+            var atual:Lista = lista.getPrimeiro()
+            var elem:Elemento = atual.getElemento()
+            while(atual != null)
+            {
+                elem = atual.getElemento()
+                if(elem is Quadrado)
+                    Desenha(elem)
+                else if(elem is Bloco)
+                    Desenha(elem)
+                else if(elem is Imagem)
+                    Desenha(elem)
+                else if(elem is Linha)
+                    Desenha(elem)
+                else if(elem is Texto)
+                    Desenha(elem)
+                if(atual.proximo == null)
+                    break
+                atual = atual.getProximo()
+            }
+        }
+    }
+}
