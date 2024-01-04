@@ -3,6 +3,7 @@ package com.example.greetingcard;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -67,6 +68,9 @@ public class GGrafico extends View
         Drawable d = getResources().getDrawable(i.getTextura(), null);
         d.setBounds(i.getX(),i.getY(),i.getX()+i.getLargura(),i.getY()+i.getAltura());
         d.draw(canvas);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), i.getTextura());
+//        canvas.drawBitmap(bitmap, i.getX(), i.getY(), pincel);
+//        bitmap = null;
     }
 
     public void Desenha(Linha i)
