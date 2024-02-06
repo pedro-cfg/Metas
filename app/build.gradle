@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.greetingcard'
+    namespace 'com.example.metas'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.greetingcard"
+        applicationId "com.example.metas"
         minSdk 21
         targetSdk 33
         versionCode 1
