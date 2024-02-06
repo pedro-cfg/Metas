@@ -8,12 +8,13 @@ public class Menu_Inicio extends Estado
     private Texto[] titulo;
     private Linha linha;
     private Botao_Inicio botao;
+    private Botao_Meta botao_meta;
 
-    Menu_Inicio()
+    Menu_Inicio(int m)
     {
         super();
         num = 0;
-        meta = 200;
+        meta = m;
     }
 
     public void inicia()
@@ -32,11 +33,13 @@ public class Menu_Inicio extends Estado
         lista_elem.insere_Elemento(meta_texto);
         lista_elem.insere_Elemento(linha);
         botao.insere_Elementos(lista_elem);
+        botao_meta.insere_Elementos(lista_elem);
     }
 
     public void insere_Conjuntos()
     {
         lista_conj.insere_Conjunto(botao);
+        lista_conj.insere_Conjunto(botao_meta);
     }
 
     public void inicializa_Tudo()
@@ -85,6 +88,10 @@ public class Menu_Inicio extends Estado
         botao.setParametros(larguraTela*30/100,alturaTela*80/100, larguraTela*40/100, alturaTela*4/100 );  
         botao.setTexto("Calendário");
         botao.inicia();
+
+        botao_meta = new Botao_Meta();
+        botao_meta.setParametros(larguraTela*35/100,alturaTela*52/100, larguraTela*30/100, alturaTela*6/100 );
+        botao_meta.inicia();
     }
 
     public void setNum(int n)
@@ -101,6 +108,14 @@ public class Menu_Inicio extends Estado
     {
         num_texto.setTexto(new Integer(num).toString());
         num_texto.setPosicao(gerenciador.getLargura()/2, gerenciador.getAltura()*51/100);
+        meta_texto.setTexto(new Integer(meta).toString());
+        meta_texto.setPosicao(gerenciador.getLargura()/2, gerenciador.getAltura()*57/100);
+    }
+
+    public void setMetas(int m)
+    {
+        meta = m;
+        atualiza();
     }
 
     @Override

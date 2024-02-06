@@ -1,6 +1,9 @@
 //package origem;
 package com.example.greetingcard;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -13,10 +16,12 @@ public class GInteracao implements View.OnTouchListener
     private Menu_Inicio menu_inicio;
     private Lista conjuntos;
     private Salvamento salvamento;
-
-    public GInteracao()
+    private MainActivity main;
+    private boolean inicio;
+    public GInteracao(MainActivity ma)
     {
-
+        main = ma;
+        inicio = true;
     }
 
     public void Inicia(Menu_Calendario m, Menu_Inicio m2, Salvamento s)
@@ -77,12 +82,34 @@ public class GInteracao implements View.OnTouchListener
         }
     }
 
+    public void interage(Botao_Meta b)
+    {
+        main.troca();
+    }
+
     public void interage(Botao_Inicio b)
     {
         if(b.getInicio())
+        {
             menu_calendario.atualiza();
+            inicio = false;
+        }
         else
+        {
             menu_inicio.atualiza();
+            inicio = true;
+        }
+    }
+
+    public boolean getInicio()
+    {
+        return inicio;
+    }
+
+    public void volta()
+    {
+        menu_inicio.atualiza();
+        inicio = true;
     }
 
     @Override
